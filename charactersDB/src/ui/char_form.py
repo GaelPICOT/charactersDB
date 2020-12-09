@@ -6,6 +6,7 @@ Created on 29 nov. 2020
 from PyQt5.QtWidgets import QWidget
 from PyQt5 import uic
 from model.base import Character
+from peewee import InterfaceError
 import os
 
 
@@ -26,5 +27,8 @@ class CharForm(QWidget):
     def save_character(self):
         self._cheracter.URI = self.base_URI_label.text() + self.URI_edit.text()
         self._cheracter.name = self.name_edit.text()
-        self._cheracter.summary = self.summary_edit.toHtml()
-        self._cheracter.save()
+        self._cheracter.summary = self.summary_edit.toPlainText()
+        try:
+            self._cheracter.save()
+        except InterfaceError:
+            pass
