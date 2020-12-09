@@ -32,17 +32,17 @@ class Character(Element):
 
 class RelationType(Element):
     name = CharField()
-    max_number_element = IntegerField()
+    max_number_character = IntegerField()
 
 
-class Relation(Element):
+class RelationCharacter(Element):
     relation_type = ForeignKeyField(RelationType)
-    characters = ManyToManyField(Element)
+    characters = ManyToManyField(Character)
 
-    def add_element(self, new_element):
-        if (len(self.characters) <= self.relation_type.max_number_element
-                or self.relation_type.max_number_element == 0):
-            self.characters.append(new_element)
+    def add_character(self, new_character):
+        if (len(self.characters) <= self.relation_type.max_number_character
+                or self.relation_type.max_number_character == 0):
+            self.characters.append(new_character)
 
 
 class AttributeType(Element):
@@ -84,4 +84,5 @@ class DataBase(object):
             return self._base_URI.value
 
 
-table_db = [Option, Character, RelationType, Relation, AttributeType, Attribute]
+table_db = [Option, Character, RelationType, RelationCharacter, AttributeType,
+            Attribute]

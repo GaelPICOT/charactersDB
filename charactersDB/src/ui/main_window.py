@@ -6,7 +6,7 @@ Created on 28 nov. 2020
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QInputDialog, QLineEdit
 from PyQt5 import uic
 from ui.char_form import CharForm
-from model.base import DataBase, table_db, Option
+from model.base import DataBase
 import os
 
 
