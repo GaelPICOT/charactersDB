@@ -5,6 +5,7 @@ Created on 29 nov. 2020
 '''
 from PyQt5.QtWidgets import QWidget
 from PyQt5 import uic
+from model.base import Character
 import os
 
 
@@ -18,4 +19,12 @@ class CharForm(QWidget):
         QWidget.__init__(self)
         uic.loadUi(file_name, self)
         self._db = base
-        self.base_URI_label.text = base.base_URI
+        self.base_URI_label.setText(base.base_URI)
+        self.save_button.clicked.connect(self.save_character)
+        self._cheracter = Character()
+
+    def save_character(self):
+        self._cheracter.URI = self.base_URI_label.text() + self.URI_edit.text()
+        self._cheracter.name = self.name_edit.text()
+        self._cheracter.summary = self.summary_edit.toHtml()
+        self._cheracter.save()
