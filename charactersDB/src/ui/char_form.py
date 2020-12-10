@@ -34,6 +34,7 @@ class CharForm(QWidget):
         self._character.URI = self.base_URI_label.text() + self.URI_edit.text()
         self._character.name = self.name_edit.text()
         self._character.summary = self.summary_edit.toPlainText()
+        self._character.status = self._db.default_status
         try:
             self._character.save()
         except InterfaceError:
