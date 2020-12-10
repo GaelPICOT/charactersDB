@@ -96,12 +96,15 @@ class DataBase(object):
             new_status_element.save()
             if i == 0:
                 self._default_status = new_status_element
+                Option(name="default status",
+                       value=str(new_status_element.id)).save()
 
     def load(self, file_name):
         self._db.init(file_name)
         self._db.connect()
         self._base_URI = Option.get(Option.name=="base_URI")
-        self._default_status = Status.get(id=1)
+        id_default = int(Option.get(Option.name=="default status").value)
+        self._default_status = Status.get(id=id_default)
 
     @property
     def base_URI(self):

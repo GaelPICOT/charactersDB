@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>594</width>
-    <height>621</height>
+    <height>638</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -103,6 +103,22 @@ p, li { white-space: pre-wrap; }
          <string>Enregistrer</string>
         </property>
        </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget_10" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>status</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="status_combo"/>
       </item>
      </layout>
     </widget>
