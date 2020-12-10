@@ -11,5 +11,5 @@ import ui.main_window
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     main_window = ui.main_window.MainWindow()
-    main_window.show()
+    main_window.showMaximized()
     sys.exit(app.exec_())

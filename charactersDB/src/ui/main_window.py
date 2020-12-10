@@ -22,6 +22,7 @@ class MainWindow(QMainWindow):
         self.action_new_db.triggered.connect(self.create_DB)
         self.action_ope_db.triggered.connect(self.open_db)
         self.action_new_char.triggered.connect(self.create_char)
+        self.charactere_list.itemActivated.connect(self.open_character)
         self._db = DataBase()
         self._base_URI = None
         self._characters = []
@@ -46,4 +47,10 @@ class MainWindow(QMainWindow):
 
     def create_char(self):
         self._char_form = CharForm(self._db)
+        self._char_form.show()
+
+    def open_character(self):
+        self._char_form = CharForm(self._db, self._characters[self.
+                                                              charactere_list.
+                                                              currentRow()])
         self._char_form.show()
