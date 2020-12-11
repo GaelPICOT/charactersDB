@@ -15,6 +15,12 @@ class BaseModel(Model):
         database = db
 
 
+class Universe(BaseModel):
+    URI = CharField()
+    name = CharField(null=True)
+    description = TextField(null=True)
+
+
 class Status(BaseModel):
     name = CharField()
     description = TextField()
@@ -27,6 +33,7 @@ class Option(BaseModel):
 
 class Element(BaseModel):
     status = ForeignKeyField(Status)
+    universe = Universe(null=True)
     URI = CharField(unique=True, null=True)
 
 
@@ -118,5 +125,5 @@ class DataBase(object):
         return self._default_status
 
 
-table_db = [Status, Option, Character, RelationType, Relation, AttributeType,
-            Attribute, RelationElements]
+table_db = [Universe, Status, Option, Character, RelationType, Relation,
+            AttributeType, Attribute, RelationElements]
