@@ -3,7 +3,7 @@ Created on 28 nov. 2020
 
 @author: inilog
 '''
-from peewee import Model, CharField, TextField, ForeignKeyField
+from peewee import Model, CharField, TextField, ForeignKeyField, IntegerField
 from peewee import SqliteDatabase
 
 
@@ -16,7 +16,7 @@ class BaseModel(Model):
 
 
 class Universe(BaseModel):
-    URI = CharField()
+    URI = CharField(unique=True)
     name = CharField(null=True)
     description = TextField(null=True)
 
@@ -35,6 +35,7 @@ class Element(BaseModel):
     status = ForeignKeyField(Status)
     universe = Universe(null=True)
     URI = CharField(unique=True, null=True)
+    next_unic_URI_value = IntegerField(default=1)
 
 
 class Character(Element):
@@ -58,7 +59,7 @@ class AttributeType(Element):
 
 
 class Attribute(Element):
-    object = ForeignKeyField(Element)
+    subject = ForeignKeyField(Element)
     attribute_type = ForeignKeyField(AttributeType)
     value = TextField()
 
