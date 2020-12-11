@@ -3,7 +3,7 @@ Created on 28 nov. 2020
 
 @author: inilog
 '''
-from peewee import Model, CharField, TextField, IntegerField, ForeignKeyField
+from peewee import Model, CharField, TextField, ForeignKeyField
 from peewee import SqliteDatabase
 
 
@@ -44,7 +44,12 @@ class Character(Element):
 
 class RelationType(Element):
     name = CharField()
-    max_number_element = IntegerField()
+
+
+class Relation(Element):
+    subject = ForeignKeyField(Element)
+    relation_type = ForeignKeyField(RelationType)
+    object = ForeignKeyField(Element)
 
 
 class AttributeType(Element):
@@ -56,21 +61,6 @@ class Attribute(Element):
     object = ForeignKeyField(Element)
     attribute_type = ForeignKeyField(AttributeType)
     value = TextField()
-
-
-class Relation(Element):
-    relation_type = ForeignKeyField(RelationType)
-
-    #TODO: correct add element for replacement of many to many field.
-    def add_element(self, new_element):
-        if (len(self.characters) <= self.relation_type.max_number_element
-                or self.relation_type.max_number_element == 0):
-            self.elements.append(new_element)
-
-
-class RelationElements(Element):
-    relation = ForeignKeyField(Relation)
-    element = ForeignKeyField(Element)
 
 
 class DataBase(object):
@@ -126,4 +116,4 @@ class DataBase(object):
 
 
 table_db = [Universe, Status, Option, Character, RelationType, Relation,
-            AttributeType, Attribute, RelationElements]
+            AttributeType, Attribute]
