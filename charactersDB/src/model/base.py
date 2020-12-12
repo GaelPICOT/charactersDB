@@ -4,7 +4,7 @@ Created on 28 nov. 2020
 @author: inilog
 '''
 from peewee import Model, CharField, TextField, ForeignKeyField, IntegerField
-from peewee import SqliteDatabase
+from peewee import SqliteDatabase, BooleanField
 
 
 db = SqliteDatabase(None)
@@ -38,18 +38,28 @@ class Element(BaseModel):
     next_unic_URI_value = IntegerField(default=1)
 
 
+class Work(Element):
+    """ describe a work (book, scenary, film, ...) were an element occure
+    linked by a relation with predicate
+    """
+    name = CharField()
+    description = TextField()
+
+
 class Character(Element):
     name = CharField()
     summary = TextField()
 
 
-class RelationType(Element):
+class Predicate(Element):
     name = CharField()
+    create_subelement = BooleanField(default=False)
+    is_subelement = BooleanField(default=False)
 
 
 class Relation(Element):
     subject = ForeignKeyField(Element)
-    relation_type = ForeignKeyField(RelationType)
+    predicate = ForeignKeyField(Element)
     object = ForeignKeyField(Element)
 
 
@@ -69,6 +79,7 @@ class DataBase(object):
         self._db = db
         self._base_URI = None
         self._default_status = None
+        self._version = 0
         
     def create(self, file_name, base_URI):
         if file_name[-3:] != '.cdb':
@@ -78,8 +89,10 @@ class DataBase(object):
         self._db.create_tables(table_db)
         if base_URI[-1:] != '/':
             base_URI += '/'
-        self._base_URI = Option(name="base_URI", value = base_URI)
+        self._base_URI = Option(name="base_URI", value=base_URI)
         self._base_URI.save()
+        version = Option(name='version', value=self._version)
+        version.save()
         status = [{'name':'ébauche',
                    'description': 'élément en cours d''ébauche'},
                   {'name':'validé',
@@ -116,5 +129,6 @@ class DataBase(object):
         return self._default_status
 
 
-table_db = [Universe, Status, Option, Character, RelationType, Relation,
-            AttributeType, Attribute]
+meta_table = [Element, Universe, Status, Option, Predicate, Relation,
+              AttributeType, Attribute]
+table_db = meta_table + [Character]
