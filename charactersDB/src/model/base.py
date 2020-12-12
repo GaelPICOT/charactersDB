@@ -19,6 +19,7 @@ class Universe(BaseModel):
     URI = CharField(unique=True)
     name = CharField(null=True)
     description = TextField(null=True)
+    base_time = CharField(unique=True)
 
 
 class Status(BaseModel):
@@ -38,6 +39,23 @@ class Element(BaseModel):
     next_unic_URI_value = IntegerField(default=1)
 
 
+class RelativeTime(Element):
+    time_in_second = IntegerField()
+
+
+class Location(Element):
+    name = CharField()
+    description = TextField()
+    parent = ForeignKeyField("self", null=True)
+
+
+class Event(Element):
+    name = CharField()
+    relative_time = ForeignKeyField(RelativeTime)
+    location = ForeignKeyField(Location)
+    parent = ForeignKeyField("self", null=True)
+
+
 class Work(Element):
     """ describe a work (book, scenary, film, ...) were an element occure
     linked by a relation with predicate
@@ -54,7 +72,7 @@ class Character(Element):
 class Predicate(Element):
     name = CharField()
     create_subelement = BooleanField(default=False)
-    is_subelement = BooleanField(default=False)
+    parent = ForeignKeyField("self", null=True)
 
 
 class Relation(Element):
@@ -129,6 +147,5 @@ class DataBase(object):
         return self._default_status
 
 
-meta_table = [Element, Universe, Status, Option, Predicate, Relation,
-              AttributeType, Attribute]
-table_db = meta_table + [Character]
+table_db = [Element, Universe, Status, Option, Predicate, Relation, Event,
+            AttributeType, Attribute, Location, Character, RelativeTime]
