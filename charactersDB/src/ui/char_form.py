@@ -3,7 +3,7 @@ Created on 29 nov. 2020
 
 @author: paradoxisme
 '''
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QMessageBox
 from PyQt5 import uic
 from model.base import Character, Status
 from peewee import InterfaceError, IntegrityError
@@ -49,9 +49,11 @@ class CharForm(QWidget):
         try:
             self._character.save()
         except InterfaceError:
-            pass
+            QMessageBox.warning(self, 'Pas de base de donnee charger',
+                                'Vous devez charger une base de donnee pour ' +
+                                'enregistrer un personnage.')
         except IntegrityError:
-            common_URI = Character.get(URI==URI)
+            common_URI = Character.get(URI == URI)
             self._character.URI += '.' + str(common_URI.next_unic_URI_value)
             common_URI.next_unic_URI_value += 1
             common_URI.save()

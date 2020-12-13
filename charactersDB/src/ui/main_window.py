@@ -30,8 +30,9 @@ class MainWindow(QMainWindow):
     def create_DB(self):
         self._characters = []
         file_name, _ = QFileDialog(self).getSaveFileName(None, 'Créer', '',
-                                                        '*.cdb')
-        base_URI, okPressed = QInputDialog.getText(self, "Base URI","Base URI:",
+                                                         '*.cdb')
+        base_URI, okPressed = QInputDialog.getText(self, "Base URI",
+                                                   "Base URI:",
                                                    QLineEdit.Normal, "")
         if file_name and okPressed:
             self._db.create(file_name, base_URI)
