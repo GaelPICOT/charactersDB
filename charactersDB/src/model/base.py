@@ -4,7 +4,7 @@ Created on 28 nov. 2020
 @author: inilog
 '''
 from peewee import Model, CharField, TextField, ForeignKeyField, IntegerField
-from peewee import SqliteDatabase, BooleanField
+from peewee import SqliteDatabase
 
 
 db = SqliteDatabase(None)
@@ -71,8 +71,6 @@ class Character(Element):
 
 class Predicate(Element):
     name = CharField()
-    create_subelement = BooleanField(default=False)
-    parent = ForeignKeyField("self", null=True)
 
 
 class Relation(Element):
