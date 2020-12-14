@@ -17,6 +17,7 @@ class BaseModel(Model):
 
 class Universe(BaseModel):
     URI = CharField(unique=True)
+    base_URI = CharField(unique=True)
     name = CharField(null=True)
     description = TextField(null=True)
     base_time = CharField(unique=True)
@@ -51,7 +52,8 @@ class Location(Element):
 
 class Event(Element):
     name = CharField()
-    relative_time = ForeignKeyField(RelativeTime)
+    start = ForeignKeyField(RelativeTime)
+    end = ForeignKeyField(RelativeTime)
     location = ForeignKeyField(Location)
     parent = ForeignKeyField("self", null=True)
 
